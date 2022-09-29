@@ -10,6 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         
         //MARK: feedVC
+        //
         let feedBarItem = UITabBarItem()
         feedBarItem.title = "Feed"
         feedBarItem.image = UIImage(systemName: "doc.plaintext")
