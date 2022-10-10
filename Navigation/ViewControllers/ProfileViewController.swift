@@ -2,6 +2,8 @@ import UIKit
 import StorageService
 
 class ProfileViewController: UIViewController {
+    
+    let viewModel: ProfileViewModel
 
     var login: String?
 
@@ -14,6 +16,16 @@ class ProfileViewController: UIViewController {
         postTableView.separatorInset = .zero
         return postTableView
     }()
+    
+    init(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        //self.viewModel.showUserData()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -63,8 +75,10 @@ class ProfileViewController: UIViewController {
     
     //MARK: - Arrow Button Action
     @objc private func arrowButtonAction() {
-        let photoVC = PhotoViewController()
-        self.navigationController?.pushViewController(photoVC, animated: true)
+//        let photoVC = PhotoViewController()
+//        self.navigationController?.pushViewController(photoVC, animated: true)
+        
+        self.viewModel.showGallery()
     }
 }
 
@@ -103,8 +117,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            let photoVC = PhotoViewController()
-            navigationController?.pushViewController(photoVC, animated: true)
+//            let photoVC = PhotoViewController()
+//            navigationController?.pushViewController(photoVC, animated: true)
+            
+            self.viewModel.showGallery()
         }
     }
     
