@@ -5,6 +5,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     var isLogin: Bool = false
     var delegate: LoginViewControllerDelegate?
     
+    let mainCoordinator = MainCoordinator()
+    
+    let viewModel: LogInViewModel
+    
     private lazy var loginScrollView: UIScrollView = {
         let loginScrollView = UIScrollView()
         loginScrollView.toAutoLayout()
@@ -94,8 +98,16 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return loginButton
     }()
 
+    init(viewModel: LogInViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    // MARK: -
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -222,8 +234,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
           if result {
               isLogin = true
-              let profileVC = ProfileViewController()
-              navigationController?.pushViewController(profileVC, animated: false)
+//              let profileVC = ProfileViewController()
+//              navigationController?.pushViewController(profileVC, animated: false)
+              
+              self.viewModel.showProfileVC(usernameText: loginTextField.text)
           } else {
               isLogin = false
               let alertVC = UIAlertController(title: "Error", message: "Wrong user", preferredStyle: .alert)

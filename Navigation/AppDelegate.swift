@@ -9,8 +9,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         
+        /*
         //MARK: feedVC
-        //
         let feedBarItem = UITabBarItem()
         feedBarItem.title = "Feed"
         feedBarItem.image = UIImage(systemName: "doc.plaintext")
@@ -46,6 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.selectedIndex = 0
         
         window?.rootViewController = tabBarController
+        */
+        
+        let mainCoordinator = MainCoordinator()
+        self.window?.rootViewController = mainCoordinator.launchApp()
         window?.makeKeyAndVisible()
         
         return true

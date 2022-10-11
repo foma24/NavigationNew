@@ -1,14 +1,19 @@
 import UIKit
+import StorageService
 
 class FeedViewController: UIViewController {
+    
+    private let viewModel: FeedViewModel
     
     var passwordText: String = ""
     
     lazy private var firstButton: CustomButton = {
         var firstButton = CustomButton(title: "First Button", titleColor: .white) {
-            let postVC = PostViewController()
-            self.navigationController?.pushViewController(postVC, animated: true)
-            postVC.postTitle = "First Button"
+//            let postVC = PostViewController()
+//            self.navigationController?.pushViewController(postVC, animated: true)
+//            postVC.postTitle = "First Button"
+            
+            self.viewModel.post1DidTap()
         }
         
         return firstButton
@@ -16,9 +21,11 @@ class FeedViewController: UIViewController {
     
     lazy private var secondButton: CustomButton = {
         var secondButton = CustomButton(title: "Second Button", titleColor: .white) {
-            let postVC = PostViewController()
-            self.navigationController?.pushViewController(postVC, animated: true)
-            postVC.postTitle = "Second Button"
+//            let postVC = PostViewController()
+//            self.navigationController?.pushViewController(postVC, animated: true)
+//            postVC.postTitle = "Second Button"
+            
+            self.viewModel.post2DidTap()
         }
         
         return secondButton
@@ -51,6 +58,15 @@ class FeedViewController: UIViewController {
         
         return stateLabel
     }()
+    
+    init(viewModel: FeedViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -94,8 +110,8 @@ class FeedViewController: UIViewController {
     }
     
     //MARK: - button tapped
-    @objc private func buttonTapped() {
-        let postVC = PostViewController()
-        navigationController?.pushViewController(postVC, animated: true)
-    }
+//    @objc private func buttonTapped() {
+//        let postVC = PostViewController()
+//        navigationController?.pushViewController(postVC, animated: true)
+//    }
 }
