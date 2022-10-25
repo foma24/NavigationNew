@@ -154,7 +154,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .white
         view.addSubview(loginScrollView)
         loginScrollView.addSubview(contentView)
-        contentView.addSubviews(VKIcon, stackView, loginButton, generatePasswordButton, activityIndicator)
+        contentView.addSubviews(VKIcon, stackView, loginButton, activityIndicator, generatePasswordButton)
         stackView.addArrangedSubview(loginTextField)
         stackView.addArrangedSubview(passwordTextField)
         setupConstraints()
@@ -198,7 +198,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             generatePasswordButton.heightAnchor.constraint(equalToConstant: 50),
             
             activityIndicator.centerYAnchor.constraint(equalTo: generatePasswordButton.centerYAnchor),
-            activityIndicator.leadingAnchor.constraint(equalTo: generatePasswordButton.trailingAnchor, constant: 16)
+            activityIndicator.centerXAnchor.constraint(equalTo: generatePasswordButton.centerXAnchor)
         ])
     }
     
@@ -271,7 +271,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     @objc private func generatePasswordButtonPressed() {
             let password = genPass(lenght: 4)
             DispatchQueue.main.async { [weak self] in
+                self?.generatePasswordButton.isEnabled = false
                 self?.activityIndicator.startAnimating()
+                self?.activityIndicator.isHidden = false
                 DispatchQueue.global().async {
                     let sucesessHack = BruteForce.bruteForce(passwordToUnlock: password)
                     if sucesessHack {
@@ -280,6 +282,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                             self?.activityIndicator.isHidden = true
                             self?.passwordTextField.text = password
                             self?.passwordTextField.isSecureTextEntry = false
+                            self?.generatePasswordButton.isEnabled = true
                         }
                     }
                 }
