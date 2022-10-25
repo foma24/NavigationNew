@@ -93,9 +93,35 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         return loginButton
     }()
-
     
-    // MARK: -
+    private lazy var generatePasswordButton: UIButton = {
+        let generatePasswordButton = UIButton()
+        generatePasswordButton.toAutoLayout()
+        
+        generatePasswordButton.setTitle("Generate password", for: .normal)
+        generatePasswordButton.setTitleColor(.white, for: .normal)
+        generatePasswordButton.addTarget(self, action: #selector(generatePasswordButtonPressed), for: .touchUpInside)
+        generatePasswordButton.layer.cornerRadius = 10
+        generatePasswordButton.clipsToBounds = true
+        if let image = UIImage(named: "blue_pixel") {
+            generatePasswordButton.setBackgroundImage(image.image(alpha: 1), for: .normal)
+            generatePasswordButton.setBackgroundImage(image.image(alpha: 0.8), for: .selected)
+            generatePasswordButton.setBackgroundImage(image.image(alpha: 0.8), for: .highlighted)
+            generatePasswordButton.setBackgroundImage(image.image(alpha: 0.8), for: .disabled)
+        }
+        
+        return generatePasswordButton
+    }()
+    
+    private let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.toAutoLayout()
+        
+        return activityIndicator
+    }()
+    
+    
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -128,7 +154,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .white
         view.addSubview(loginScrollView)
         loginScrollView.addSubview(contentView)
-        contentView.addSubviews(VKIcon, stackView, loginButton)
+        contentView.addSubviews(VKIcon, stackView, loginButton, generatePasswordButton, activityIndicator)
         stackView.addArrangedSubview(loginTextField)
         stackView.addArrangedSubview(passwordTextField)
         setupConstraints()
@@ -165,6 +191,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            generatePasswordButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 8),
+            generatePasswordButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            generatePasswordButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            generatePasswordButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            activityIndicator.centerYAnchor.constraint(equalTo: generatePasswordButton.centerYAnchor),
+            activityIndicator.leadingAnchor.constraint(equalTo: generatePasswordButton.trailingAnchor, constant: 16)
         ])
     }
     
@@ -201,35 +235,64 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-          guard loginTextField.text?.isEmpty == false else {
-              let alertVC = UIAlertController(title: "Error", message: "Login is empty", preferredStyle: .alert)
-              let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
-              alertVC.addAction(action)
-              self.present(alertVC, animated: true, completion: nil)
-              return }
-          
-          guard passwordTextField.text?.isEmpty == false else {
-              let alertVC = UIAlertController(title: "Error", message: "Password is empty", preferredStyle: .alert)
-              let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
-              alertVC.addAction(action)
-              self.present(alertVC, animated: true, completion: nil)
-              return }
-
-          guard let login = loginTextField.text else { return }
-          guard let password = passwordTextField.text else { return }
-          guard let delegate = delegate else { return }
-          let result = delegate.check(login: login, password: password)
-
-          if result {
-              isLogin = true
-              let profileVC = ProfileViewController()
-              navigationController?.pushViewController(profileVC, animated: false)
-          } else {
-              isLogin = false
-              let alertVC = UIAlertController(title: "Error", message: "Wrong user", preferredStyle: .alert)
-              let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
-              alertVC.addAction(action)
-              self.present(alertVC, animated: true, completion: nil)
-          }
+        guard loginTextField.text?.isEmpty == false else {
+            let alertVC = UIAlertController(title: "Error", message: "Login is empty", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+            return }
+        
+        guard passwordTextField.text?.isEmpty == false else {
+            let alertVC = UIAlertController(title: "Error", message: "Password is empty", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+            return }
+        
+        guard let login = loginTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let delegate = delegate else { return }
+        let result = delegate.check(login: login, password: password)
+        
+        if result {
+            isLogin = true
+            let profileVC = ProfileViewController()
+            navigationController?.pushViewController(profileVC, animated: false)
+        } else {
+            isLogin = false
+            let alertVC = UIAlertController(title: "Error", message: "Wrong user", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Generate password button pressed
+    @objc private func generatePasswordButtonPressed() {
+            let password = genPass(lenght: 4)
+            DispatchQueue.main.async { [weak self] in
+                self?.activityIndicator.startAnimating()
+                DispatchQueue.global().async {
+                    let sucesessHack = BruteForce.bruteForce(passwordToUnlock: password)
+                    if sucesessHack {
+                        DispatchQueue.main.async {
+                            self?.activityIndicator.stopAnimating()
+                            self?.activityIndicator.isHidden = true
+                            self?.passwordTextField.text = password
+                            self?.passwordTextField.isSecureTextEntry = false
+                        }
+                    }
+                }
+            }
+    }
+    
+    private func genPass(lenght: Int) -> String {
+        let allowedChar:[String] = String().printable.map { String($0) }
+        var password = ""
+        (0..<lenght).forEach { _ in
+            password.append(allowedChar.randomElement()!)
+        }
+        print("Generated password: \(password)")
+        return password
     }
 }
