@@ -4,6 +4,7 @@ class InfoViewController: UIViewController {
     
     var alertButton = UIButton()
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         

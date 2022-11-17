@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31ED18982926B32A000E7736 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31ED18972926B32A000E7736 /* NetworkService.swift */; };
 		7C02AF8827F607570084BEF1 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C02AF8727F607570084BEF1 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7C02AF8B27F607570084BEF1 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C02AF8527F607570084BEF1 /* StorageService.framework */; };
 		7C02AF8C27F607570084BEF1 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7C02AF8527F607570084BEF1 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -23,7 +24,6 @@
 		7C5EC5D9281AEEAB002EE9C0 /* CurrentUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EC5D8281AEEAB002EE9C0 /* CurrentUserService.swift */; };
 		7C5EC5DB281AF525002EE9C0 /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EC5DA281AF525002EE9C0 /* TestUserService.swift */; };
 		7C8FADC12751704C009FB054 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8FADC02751704C009FB054 /* AppDelegate.swift */; };
-		7C8FADC52751704C009FB054 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8FADC42751704C009FB054 /* ViewController.swift */; };
 		7C8FADCA2751704E009FB054 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C8FADC92751704E009FB054 /* Assets.xcassets */; };
 		7C8FADCD2751704E009FB054 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8FADCB2751704E009FB054 /* LaunchScreen.storyboard */; };
 		7C8FADDB27517506009FB054 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8FADDA27517506009FB054 /* FeedViewController.swift */; };
@@ -71,6 +71,7 @@
 /* Begin PBXFileReference section */
 		01CA7B678B5B1D4F91037CF9 /* Pods-StorageService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.debug.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.debug.xcconfig"; sourceTree = "<group>"; };
 		1BC9493E1F545DDE53DCD245 /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
+		31ED18972926B32A000E7736 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		47D75B369558B49ABA02E2D7 /* Pods-StorageService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.release.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.release.xcconfig"; sourceTree = "<group>"; };
 		735AD734FA1703F2E611A3A8 /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
 		758521C18338E9484F4F2D13 /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,7 +89,6 @@
 		7C5EC5DA281AF525002EE9C0 /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
 		7C8FADBD2751704C009FB054 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C8FADC02751704C009FB054 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7C8FADC42751704C009FB054 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7C8FADC92751704E009FB054 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C8FADCC2751704E009FB054 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7C8FADCE2751704E009FB054 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -192,6 +192,7 @@
 				7C2BA5C12821B05A00499265 /* LoginInspector.swift */,
 				7C2BA5C32821B08700499265 /* LoginViewControllerDelegate.swift */,
 				7C2BA5C52821B0B100499265 /* LoginFactory.swift */,
+				31ED18972926B32A000E7736 /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -254,7 +255,6 @@
 		7CC615D027FCDB57003FB3ED /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				7C8FADC42751704C009FB054 /* ViewController.swift */,
 				7C8FADDA27517506009FB054 /* FeedViewController.swift */,
 				7C8FADDE27517FA1009FB054 /* PostViewController.swift */,
 				7CF87E532751D44600499AB6 /* InfoViewController.swift */,
@@ -459,11 +459,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C8FADDB27517506009FB054 /* FeedViewController.swift in Sources */,
-				7C8FADC52751704C009FB054 /* ViewController.swift in Sources */,
 				7C2BA5C02821B03100499265 /* LoginFactoryProtocol.swift in Sources */,
 				7C57761F2767B1E100F5D8EF /* LogInViewController.swift in Sources */,
 				7C8FADDD27517520009FB054 /* ProfileViewController.swift in Sources */,
 				7CAE2E03276FDA11003922D9 /* UIView_extension.swift in Sources */,
+				31ED18982926B32A000E7736 /* NetworkService.swift in Sources */,
 				7C2BA5BE2821AFF900499265 /* LoginChecker.swift in Sources */,
 				7CF845AB27763F2300983EAB /* PhotosData.swift in Sources */,
 				7C95511828296BD100E15970 /* CustomButtonTF.swift in Sources */,
