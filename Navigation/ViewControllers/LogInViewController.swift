@@ -95,7 +95,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }()
 
     
-    // MARK: -
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         

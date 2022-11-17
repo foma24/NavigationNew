@@ -40,11 +40,13 @@ class PhotoViewController: UIViewController {
         }
     }
     
+    //MARK: - deinit
     deinit {
         facade.rechargeImageLibrary()
         facade.removeSubscription(for: self)
     }
     
+    //MARK: - evaluateDuration
     private func evaluateDuration(filter: ColorFilter, qos: QualityOfService) {
         var qosTitle: String
         switch qos {
@@ -84,7 +86,7 @@ class PhotoViewController: UIViewController {
         
     }
     
-    
+    //MARK: - qosTest
     private func qosTest() {
         
         // 0.000157208 seconds, 4 новых потока
@@ -103,6 +105,7 @@ class PhotoViewController: UIViewController {
         //evaluateDuration(filter: .bloom(intensity: 0.2), qos: .background)
     }
     
+    //MARK: - setupConstraints
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             photosCollection.topAnchor.constraint(equalTo: view.topAnchor),
@@ -150,6 +153,7 @@ extension PhotoViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
 }
 
+//MARK: - ImageLibrarySubscriber ext
 extension PhotoViewController: ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
         photosArray = []

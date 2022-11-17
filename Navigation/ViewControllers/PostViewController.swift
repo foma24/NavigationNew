@@ -1,7 +1,6 @@
 import UIKit
 
 class PostViewController: UIViewController {
-    
     private let postImage: UIImageView = {
         let postImage = UIImageView()
         postImage.toAutoLayout()
@@ -36,6 +35,7 @@ class PostViewController: UIViewController {
     private var viewsCount: Int = 0
     var postTitle: String?
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,10 +56,12 @@ class PostViewController: UIViewController {
         }
     }
     
+    //MARK: - viewDidDisappear
     override func viewDidDisappear(_ animated: Bool) {
         stopTimer()
     }
     
+    //MARK: - setupSubviewsLayout
     private func setupSubviewsLayout() {
         NSLayoutConstraint.activate([
             postImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -76,6 +78,7 @@ class PostViewController: UIViewController {
 
     }
 
+    //MARK: - Timer
     private func startTimer() {
         print(#function)
         guard timer == nil else {return}
@@ -102,6 +105,7 @@ class PostViewController: UIViewController {
         }
     }
     
+    //MARK: - infoTapped
     @objc func infoTapped() {
         let infoVC = InfoViewController()
         navigationController?.present(infoVC, animated: true)
