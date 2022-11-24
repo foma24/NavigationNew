@@ -1,9 +1,12 @@
 import UIKit
+import FirebaseAuth
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
     var isLogin: Bool = false
     var delegate: LoginViewControllerDelegate?
+    static var signupError: String?
+    static var loginError: String?
     
     private lazy var loginScrollView: UIScrollView = {
         let loginScrollView = UIScrollView()
@@ -75,6 +78,25 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return passwordTF
     }()
     
+    private lazy var signupButton: UIButton = {
+        let signupButton = UIButton()
+        signupButton.toAutoLayout()
+        if let image = UIImage(named: "blue_pixel") {
+            signupButton.setBackgroundImage(image.image(alpha: 1), for: .normal)
+            signupButton.setBackgroundImage(image.image(alpha: 0.8), for: .selected)
+            signupButton.setBackgroundImage(image.image(alpha: 0.8), for: .highlighted)
+            signupButton.setBackgroundImage(image.image(alpha: 0.8), for: .disabled)
+        }
+        
+        signupButton.setTitle("SignUp", for: .normal)
+        signupButton.setTitleColor(.white, for: .normal)
+        signupButton.addTarget(self, action: #selector(signupButtonPressed), for: .touchUpInside)
+        signupButton.layer.cornerRadius = 10
+        signupButton.clipsToBounds = true
+        
+        return signupButton
+    }()
+        
     private lazy var loginButton: UIButton = {
         let loginButton = UIButton()
         loginButton.toAutoLayout()
@@ -105,9 +127,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         setupViews()
         
-        //Keyboard
+        //Keyboard hide
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
         self.view.addGestureRecognizer(tapGesture)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.signupError), name: Notification.Name("signupError"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.signupSuccess), name: Notification.Name("signupSuccess"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginError), name: Notification.Name("loginError"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginSuccess), name: Notification.Name("loginSuccess"), object: nil)
         
     }
     
@@ -115,9 +143,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        if FirebaseAuth.Auth.auth().currentUser != nil {
+            let profileVC = ProfileViewController()
+            navigationController?.pushViewController(profileVC, animated: false)
+        }
     }
     
-    // MARK: - viewDidAppear
+    // MARK: - viewDidDisappear
     override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -128,7 +161,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .white
         view.addSubview(loginScrollView)
         loginScrollView.addSubview(contentView)
-        contentView.addSubviews(VKIcon, stackView, loginButton)
+        contentView.addSubviews(VKIcon, stackView, loginButton, signupButton)
         stackView.addArrangedSubview(loginTextField)
         stackView.addArrangedSubview(passwordTextField)
         setupConstraints()
@@ -165,6 +198,11 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            signupButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
+            signupButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            signupButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            signupButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
     
@@ -191,45 +229,79 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         loginScrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
+    // MARK: - SignUp
+    @objc private func signupButtonPressed() {
+        guard loginTextField.text?.isEmpty == false else {
+            let alertVC = UIAlertController(title: "Error", message: "Login missed", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+            return }
+        
+        guard passwordTextField.text?.isEmpty == false else {
+            let alertVC = UIAlertController(title: "Error", message: "Password missed", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+            return }
+        
+        guard let login = loginTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let delegate = delegate else { return }
+        
+        delegate.signUp(username: login, password: password)
+    }
+    
+    @objc func signupError() {
+        if let signupError = LogInViewController.signupError {
+            let alertVC = UIAlertController(title: "Error", message: "\(String(describing: signupError))", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func signupSuccess() {
+        let alertVC = UIAlertController(title: "Done!", message: "You are signed up. You can Login", preferredStyle: .alert)
+        let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+        alertVC.addAction(action)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
     // MARK: - Login button pressed
     @objc private func loginButtonPressed() {
-        //isLogin = true
-        if let image = UIImage(named: "blue_pixel") {
-            loginButton.setBackgroundImage(image.image(alpha: 0.8), for: .normal)
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-                self.loginButton.setBackgroundImage(image.image(alpha: 1), for: .normal)
-            }
-        }
+        guard loginTextField.text?.isEmpty == false else {
+            let alertVC = UIAlertController(title: "Error", message: "Login missed", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+            return }
         
-          guard loginTextField.text?.isEmpty == false else {
-              let alertVC = UIAlertController(title: "Error", message: "Login is empty", preferredStyle: .alert)
-              let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
-              alertVC.addAction(action)
-              self.present(alertVC, animated: true, completion: nil)
-              return }
-          
-          guard passwordTextField.text?.isEmpty == false else {
-              let alertVC = UIAlertController(title: "Error", message: "Password is empty", preferredStyle: .alert)
-              let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
-              alertVC.addAction(action)
-              self.present(alertVC, animated: true, completion: nil)
-              return }
-
-          guard let login = loginTextField.text else { return }
-          guard let password = passwordTextField.text else { return }
-          guard let delegate = delegate else { return }
-          let result = delegate.check(login: login, password: password)
-
-          if result {
-              isLogin = true
-              let profileVC = ProfileViewController()
-              navigationController?.pushViewController(profileVC, animated: false)
-          } else {
-              isLogin = false
-              let alertVC = UIAlertController(title: "Error", message: "Wrong user", preferredStyle: .alert)
-              let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
-              alertVC.addAction(action)
-              self.present(alertVC, animated: true, completion: nil)
-          }
+        guard passwordTextField.text?.isEmpty == false else {
+            let alertVC = UIAlertController(title: "Error", message: "Password missed", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+            return }
+        
+        guard let login = loginTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let delegate = delegate else { return }
+        
+        delegate.signIn(username: login, password: password)
+    }
+    
+    @objc func loginError() {
+        if let loginError = LogInViewController.loginError {
+            let alertVC = UIAlertController(title: "Error", message: "\(String(describing: loginError))", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func loginSuccess() {
+        let profileVC = ProfileViewController()
+        self.navigationController?.pushViewController(profileVC, animated: false)
     }
 }

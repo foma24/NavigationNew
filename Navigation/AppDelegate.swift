@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -8,6 +9,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
+        
+        //MARK: Firebase
+        FirebaseApp.configure()
         
         //MARK: Network request
         let appConfiguration: AppConfiguration = AppConfiguration.people
@@ -52,6 +56,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
     }
 }
 
