@@ -2,5 +2,6 @@ import Foundation
 import UIKit
 
 protocol LoginViewControllerDelegate{
-     func check(login: String, password: String) -> Bool
+    func signUp(username: String, password: String)
+    func signIn(username: String, password: String)
 }
