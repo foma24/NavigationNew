@@ -10,7 +10,6 @@ target 'Navigation' do
   
   pod 'FirebaseAuth'
   pod 'FirebaseCore'
-  pod 'Firebase/Firestore'
 end
 
 target 'StorageService' do
