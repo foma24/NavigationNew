@@ -1,4 +1,6 @@
 import UIKit
+import FirebaseAuth
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,8 +11,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         
+        //MARK: Firebase
+        FirebaseApp.configure()
+        
+        //MARK: Network request
+        let appConfiguration: AppConfiguration = AppConfiguration.people
+        NetworkService.request(for: appConfiguration)
+        
         //MARK: feedVC
-        //
         let feedBarItem = UITabBarItem()
         feedBarItem.title = "Feed"
         feedBarItem.image = UIImage(systemName: "doc.plaintext")
@@ -26,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileBarItem.title = "Profile"
         profileBarItem.image = UIImage(systemName: "folder")
         profileBarItem.selectedImage = UIImage(systemName: "folder.fill")
-//        let profileVC = ProfileViewController()
-//        profileVC.title = "Profile"
+        //        let profileVC = ProfileViewController()
+        //        profileVC.title = "Profile"
         
         //MARK: loginVC
         let loginVC = LogInViewController()
@@ -49,6 +57,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
     }
 }
 

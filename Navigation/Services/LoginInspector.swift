@@ -1,15 +1,20 @@
 import Foundation
+import UIKit
 
-class LoginInspector: LoginViewControllerDelegate {
+final class LoginInspector: LoginViewControllerDelegate {
 
-    func check(login: String, password: String) -> Bool {
-        let data = LoginChecker.shared.check(login: login, password: password)
-        if data {
-            print("Такой пользователь существует")
-            return true
-        } else {
-            print("Такого пользователя не существует")
-            return false
+    let loginCheckerData = LoginChecker.shared
+    
+    func check(username: String, password: String, completion: @escaping (Bool) -> Void) {
+        CheckerService.checkCredentials(login: username, password: password) { result in
+            completion(result)
         }
     }
+
+    func create(username: String, password: String, completion: @escaping (Bool) -> Void) {
+        CheckerService.signUp(login: username, password: password) { result in
+            completion(result)
+        }
+    }
+
 }
