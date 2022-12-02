@@ -1,4 +1,6 @@
 import UIKit
+import FirebaseAuth
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,8 +11,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         
+        //MARK: Firebase
+        FirebaseApp.configure()
+        
+        //MARK: Network request
+        let appConfiguration: AppConfiguration = AppConfiguration.people
+        NetworkService.request(for: appConfiguration)
+        
         //MARK: feedVC
-        //
         let feedBarItem = UITabBarItem()
         feedBarItem.title = "Feed"
         feedBarItem.image = UIImage(systemName: "doc.plaintext")
@@ -26,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileBarItem.title = "Profile"
         profileBarItem.image = UIImage(systemName: "folder")
         profileBarItem.selectedImage = UIImage(systemName: "folder.fill")
-//        let profileVC = ProfileViewController()
-//        profileVC.title = "Profile"
+        //        let profileVC = ProfileViewController()
+        //        profileVC.title = "Profile"
         
         //MARK: loginVC
         let loginVC = LogInViewController()
@@ -39,16 +47,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let inspector = factory.createLoginInspector()
         loginVC.delegate = inspector
         
+        //MARK: favoritesVC
+        let favoritesVC = FavoritesPostViewController()
+        let favoritesPostNavigationController = UINavigationController(rootViewController: favoritesVC)
+        let favoritesBarItem = UITabBarItem()
+        favoritesVC.title = "Favorites"
+        favoritesBarItem.title = "Favorites"
+        favoritesBarItem.image = UIImage(systemName: "heart")
+        favoritesBarItem.selectedImage = UIImage(systemName: "heart.fill")
+        favoritesVC.tabBarItem = favoritesBarItem
+        
         //MARK: Tab Bar
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
-        tabBarController.viewControllers = [feedNavigationController, loginNavigationController]
+        tabBarController.viewControllers = [feedNavigationController, loginNavigationController, favoritesPostNavigationController]
         tabBarController.selectedIndex = 0
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
     }
 }
 
