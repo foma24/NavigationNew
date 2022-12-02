@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		313571A4293A91A20045A941 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 313571A2293A91A20045A941 /* Model.xcdatamodeld */; };
+		313571A6293A92AF0045A941 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313571A5293A92AF0045A941 /* CoreDataManager.swift */; };
+		313571A8293A93430045A941 /* FavoritesPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313571A7293A93430045A941 /* FavoritesPostViewController.swift */; };
 		3145C669292822C7009E5F28 /* PlanetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3145C668292822C7009E5F28 /* PlanetModel.swift */; };
 		31583DB7292EB7E1008D7B44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 31583DB6292EB7E1008D7B44 /* GoogleService-Info.plist */; };
 		31DAFA1B2939135E009D850A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 31DAFA1A2939135E009D850A /* Realm */; };
@@ -76,6 +79,9 @@
 /* Begin PBXFileReference section */
 		01CA7B678B5B1D4F91037CF9 /* Pods-StorageService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.debug.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.debug.xcconfig"; sourceTree = "<group>"; };
 		1BC9493E1F545DDE53DCD245 /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
+		313571A3293A91A20045A941 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		313571A5293A92AF0045A941 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		313571A7293A93430045A941 /* FavoritesPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPostViewController.swift; sourceTree = "<group>"; };
 		3145C668292822C7009E5F28 /* PlanetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetModel.swift; sourceTree = "<group>"; };
 		31583DB6292EB7E1008D7B44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		31DAFA1E29392929009D850A /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
@@ -197,14 +203,15 @@
 		7C2BA5BC2821AE4500499265 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				313571A5293A92AF0045A941 /* CoreDataManager.swift */,
 				7C5EC5D8281AEEAB002EE9C0 /* CurrentUserService.swift */,
-				7C5EC5DA281AF525002EE9C0 /* TestUserService.swift */,
 				7C2BA5BD2821AFF900499265 /* LoginChecker.swift */,
 				7C2BA5BF2821B03100499265 /* LoginFactoryProtocol.swift */,
 				7C2BA5C12821B05A00499265 /* LoginInspector.swift */,
 				7C2BA5C32821B08700499265 /* LoginViewControllerDelegate.swift */,
 				7C2BA5C52821B0B100499265 /* LoginFactory.swift */,
 				31ED18972926B32A000E7736 /* NetworkService.swift */,
+				7C5EC5DA281AF525002EE9C0 /* TestUserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -243,6 +250,7 @@
 				7C8FADCB2751704E009FB054 /* LaunchScreen.storyboard */,
 				31583DB6292EB7E1008D7B44 /* GoogleService-Info.plist */,
 				7C8FADCE2751704E009FB054 /* Info.plist */,
+				313571A2293A91A20045A941 /* Model.xcdatamodeld */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -274,6 +282,7 @@
 				7C8FADDC2751751F009FB054 /* ProfileViewController.swift */,
 				7C57761E2767B1E100F5D8EF /* LogInViewController.swift */,
 				7CF845A827763CAE00983EAB /* PhotosViewController.swift */,
+				313571A7293A93430045A941 /* FavoritesPostViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -493,6 +502,7 @@
 				7C5EC5D7281AED58002EE9C0 /* User.swift in Sources */,
 				7C2BA5C42821B08700499265 /* LoginViewControllerDelegate.swift in Sources */,
 				7C18976E2773A33600CB66DD /* PhotosTableViewCell.swift in Sources */,
+				313571A6293A92AF0045A941 /* CoreDataManager.swift in Sources */,
 				7C2BA5C62821B0B100499265 /* LoginFactory.swift in Sources */,
 				7C8FADDF27517FA1009FB054 /* PostViewController.swift in Sources */,
 				7CF845A927763CAE00983EAB /* PhotosViewController.swift in Sources */,
@@ -501,8 +511,10 @@
 				7C2BA5C22821B05A00499265 /* LoginInspector.swift in Sources */,
 				7C5EC5DB281AF525002EE9C0 /* TestUserService.swift in Sources */,
 				7CF845AD2776477800983EAB /* PhotosCollectionViewCell.swift in Sources */,
+				313571A8293A93430045A941 /* FavoritesPostViewController.swift in Sources */,
 				7CDB466F27581BFA00D19FFE /* ProfileHeaderView.swift in Sources */,
 				7CCCB66E2770DC5100993A98 /* PostTableViewCell.swift in Sources */,
+				313571A4293A91A20045A941 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -834,6 +846,19 @@
 			productName = iOSIntPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		313571A2293A91A20045A941 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				313571A3293A91A20045A941 /* Model.xcdatamodel */,
+			);
+			currentVersion = 313571A3293A91A20045A941 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7C8FADB52751704C009FB054 /* Project object */;
 }

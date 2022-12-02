@@ -2,9 +2,10 @@ import UIKit
 import StorageService
 
 class ProfileViewController: UIViewController {
-
+    
     var login: String?
-
+    var cellIndex = 0
+    
     static var tableView: UITableView = {
         let postTableView = UITableView(frame: .zero, style: .grouped)
         postTableView.toAutoLayout()
@@ -18,16 +19,16 @@ class ProfileViewController: UIViewController {
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        #if DEBUG
+        
+#if DEBUG
         view.backgroundColor = .lightGray
-        #else
+#else
         view.backgroundColor = .white
-        #endif
-
+#endif
+        
         setTableView()
         setupConstraints()
-
+        
     }
     
     //MARK: - viewWillAppear
@@ -85,12 +86,19 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 1 {
             let cell = ProfileViewController.tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
-
+            
             cell.configCell(author: postArray[indexPath.row].title,
-                               image: postArray[indexPath.row].image,
-                               description: postArray[indexPath.row].description,
-                               likes: postArray[indexPath.row].likes,
-                               views: postArray[indexPath.row].views)
+                            image: postArray[indexPath.row].image,
+                            description: postArray[indexPath.row].description,
+                            likes: postArray[indexPath.row].likes,
+                            views: postArray[indexPath.row].views)
+            
+            let doubleTap = UITapGestureRecognizer()
+            doubleTap.numberOfTapsRequired = 2
+            cellIndex = indexPath.row
+            doubleTap.addTarget(self, action: #selector(likeTapped))
+            cell.addGestureRecognizer(doubleTap)
+            
             return cell
         } else {
             let cell = ProfileViewController.tableView.dequeueReusableCell(withIdentifier: PhotoTableViewCell.identifire, for: indexPath) as! PhotoTableViewCell
@@ -101,10 +109,18 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    @objc func likeTapped() {
+        CoreDataManager.shared.addPostInFavourite(postIndex: self.cellIndex)
+        NotificationCenter.default.post(name: Notification.Name("updateFavouritePosts"), object: nil)
+        
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             let photoVC = PhotoViewController()
             navigationController?.pushViewController(photoVC, animated: true)
+        } else {
+            self.cellIndex = indexPath.row
         }
     }
     

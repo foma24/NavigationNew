@@ -47,10 +47,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let inspector = factory.createLoginInspector()
         loginVC.delegate = inspector
         
+        //MARK: favoritesVC
+        let favoritesVC = FavoritesPostViewController()
+        let favoritesPostNavigationController = UINavigationController(rootViewController: favoritesVC)
+        let favoritesBarItem = UITabBarItem()
+        favoritesVC.title = "Favorites"
+        favoritesBarItem.title = "Favorites"
+        favoritesBarItem.image = UIImage(systemName: "heart")
+        favoritesBarItem.selectedImage = UIImage(systemName: "heart.fill")
+        favoritesVC.tabBarItem = favoritesBarItem
+        
         //MARK: Tab Bar
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
-        tabBarController.viewControllers = [feedNavigationController, loginNavigationController]
+        tabBarController.viewControllers = [feedNavigationController, loginNavigationController, favoritesPostNavigationController]
         tabBarController.selectedIndex = 0
         
         window?.rootViewController = tabBarController
