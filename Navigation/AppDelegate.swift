@@ -50,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //MARK: favoritesVC
         let favoritesVC = FavoritesPostViewController()
         let favoritesPostNavigationController = UINavigationController(rootViewController: favoritesVC)
+        let addFilterFavoritePostsButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        favoritesPostNavigationController.navigationItem.leftBarButtonItem = addFilterFavoritePostsButton
         let favoritesBarItem = UITabBarItem()
         favoritesVC.title = "Favorites"
         favoritesBarItem.title = "Favorites"

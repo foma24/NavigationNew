@@ -92,10 +92,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                             description: postArray[indexPath.row].description,
                             likes: postArray[indexPath.row].likes,
                             views: postArray[indexPath.row].views)
-            
+            cell.tag = indexPath.row
             let doubleTap = UITapGestureRecognizer()
             doubleTap.numberOfTapsRequired = 2
-            cellIndex = indexPath.row
             doubleTap.addTarget(self, action: #selector(likeTapped))
             cell.addGestureRecognizer(doubleTap)
             
@@ -109,10 +108,15 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    //MARK: likeTapped
     @objc func likeTapped() {
-        CoreDataManager.shared.addPostInFavourite(postIndex: self.cellIndex)
-        NotificationCenter.default.post(name: Notification.Name("updateFavouritePosts"), object: nil)
+        print(cellIndex)
+        CoreDataManager.shared.addPostInFavorite(postIndex: self.cellIndex)
         
+        let alertVC = UIAlertController(title: "Added to Favorites", message: "", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok", style: .cancel)
+        alertVC.addAction(alertAction)
+        self.present(alertVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 import StorageService
 
-struct FavouritePost {
+struct FavoritePost {
     var title: String
     var description: String
     var image: String
@@ -11,89 +11,115 @@ struct FavouritePost {
 }
 
 class CoreDataManager {
-
+    
     static let shared = CoreDataManager()
-
-    static var favoritePostsArray: [FavouritePost] = []
-
-    // Managed Object Model
-    private lazy var managedObjectModel: NSManagedObjectModel = {
-        guard let modelURL = Bundle.main.url(forResource: "Model", withExtension: "momd") else {
-            fatalError()
+    
+    static var favoritePostsArray: [FavoritePost] = []
+    
+    private lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Model")
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                fatalError()
+            }
         }
-        guard let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL) else {
-            fatalError()
-        }
-        return managedObjectModel
+        return container
     }()
-
-    // Persistent Store Coordinator
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-
-        let storeName = "Model.sqlite"
-        let documentDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let persistentStoreURL = documentDirectoryURL.appendingPathComponent(storeName)
-
-        do {
-            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: persistentStoreURL, options: nil)
-        } catch {
-            fatalError()
-        }
-        return persistentStoreCoordinator
-    }()
-
-    // Manage Object Context
-    private lazy var managedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
-        return managedObjectContext
-    }()
-
-    // метод сохранения поста в избранное
-    func addPostInFavourite(postIndex: Int) {
-
-        if let newFavouritePost = NSEntityDescription.insertNewObject(forEntityName: "FavouritePosts", into: managedObjectContext) as? FavouritePosts {
-            newFavouritePost.post_id = UUID()
-            newFavouritePost.post_title = postArray[postIndex].title
-            newFavouritePost.post_image = postArray[postIndex].image
-            newFavouritePost.post_description = postArray[postIndex].description
-            newFavouritePost.post_likes = Int16(postArray[postIndex].likes)
-            newFavouritePost.post_views = Int16(postArray[postIndex].views)
-        } else {
-            fatalError()
-        }
-
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print(error)
+    
+    private lazy var context = persistentContainer.newBackgroundContext()
+    
+    //MARK: - addPostInFavourite
+    func addPostInFavorite(postIndex: Int) {
+        context.perform { [weak self] in
+            guard let self = self else { return }
+            if let newFavoritePost = NSEntityDescription.insertNewObject(forEntityName: "FavouritePosts", into: self.context) as? FavouritePosts {
+                newFavoritePost.post_id = UUID()
+                newFavoritePost.post_title = postArray[postIndex].title
+                newFavoritePost.post_image = postArray[postIndex].image
+                newFavoritePost.post_description = postArray[postIndex].description
+                newFavoritePost.post_likes = Int16(postArray[postIndex].likes)
+                newFavoritePost.post_views = Int16(postArray[postIndex].views)
+            } else {
+                fatalError()
+            }
+            
+            do {
+                try self.context.save()
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name("updateFavoritePosts"), object: nil)
+                }
+            } catch {
+                print(error)
+            }
         }
     }
-
-    // метод получения
-    func getPostFromFavourite() {
-
+    
+    //MARK: - deletePostFromFavourite
+    func deletePostFromFavorite(postIndex: Int) {
         let fetchRequest = FavouritePosts.fetchRequest()
-
-
         do {
-
-            let favouritePosts = try managedObjectContext.fetch(fetchRequest)
-
+            let favoritePosts = try context.fetch(fetchRequest)
+            for i in favoritePosts.indices {
+                
+                if i == postIndex {
+                    context.delete(favoritePosts[i])
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: Notification.Name("updateFavoritePosts"), object: nil)
+                    }
+                }
+            }
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    //MARK: - getPostFromFavourite
+    func getPostFromFavorite() {
+        CoreDataManager.favoritePostsArray = []
+        let fetchRequest = FavouritePosts.fetchRequest()
+        do {
+            let favouritePosts = try context.fetch(fetchRequest)
             for i in favouritePosts {
-
                 guard let post_title = i.post_title else { return }
                 guard let post_description = i.post_description else { return }
                 guard let post_image = i.post_image else { return }
-
-                let tempPost = FavouritePost(title: post_title, description: post_description, image: post_image, likes: Int(i.post_likes), views: Int(i.post_views))
-
+                
+                let tempPost = FavoritePost(title: post_title, description: post_description, image: post_image, likes: Int(i.post_likes), views: Int(i.post_views))
+                
                 CoreDataManager.favoritePostsArray.append(tempPost)
-
             }
         } catch {
             print(error)
         }
     }
+    
+    //MARK: - getAuthorFilterPostsFromFavorite
+    func getAuthorFilterPostsFromFavorite(author: String) {
+
+            CoreDataManager.favoritePostsArray = []
+
+            let predicate = NSPredicate(format: "%K == %@", #keyPath(FavouritePosts.post_title), "\(author)" )
+
+            do {
+
+                let fetchRequest = FavouritePosts.fetchRequest()
+                fetchRequest.predicate = predicate
+
+                let favouritePosts = try context.fetch(fetchRequest)
+
+                for i in favouritePosts {
+
+                    guard let post_title = i.post_title else { return }
+                    guard let post_description = i.post_description else { return }
+                    guard let post_image = i.post_image else { return }
+
+                    let tempPost = FavoritePost(title: post_title, description: post_description, image: post_image, likes: Int(i.post_likes), views: Int(i.post_views))
+
+                    CoreDataManager.favoritePostsArray.append(tempPost)
+                }
+            } catch {
+                print(error)
+            }
+        }
 }
