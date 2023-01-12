@@ -10,7 +10,7 @@ class InfoViewController: UIViewController {
         alertButton.layer.cornerRadius = 10
         alertButton.clipsToBounds = true
         alertButton.backgroundColor = .red
-        alertButton.setTitle("Alert", for: .normal)
+        alertButton.setTitle(NSLocalizedString("alert", comment: "") , for: .normal)
         alertButton.setTitleColor(.white, for: .normal)
         alertButton.addTarget(self, action: #selector(alertButtonTapped), for: .touchUpInside)
         

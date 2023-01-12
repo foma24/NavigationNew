@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3145C669292822C7009E5F28 /* PlanetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3145C668292822C7009E5F28 /* PlanetModel.swift */; };
 		31583DB7292EB7E1008D7B44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 31583DB6292EB7E1008D7B44 /* GoogleService-Info.plist */; };
+		3162176E2970C98000795BEB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 316217702970C98000795BEB /* Localizable.strings */; };
 		31DAFA1B2939135E009D850A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 31DAFA1A2939135E009D850A /* Realm */; };
 		31DAFA1D2939135E009D850A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 31DAFA1C2939135E009D850A /* RealmSwift */; };
 		31DAFA1F29392929009D850A /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DAFA1E29392929009D850A /* RealmModel.swift */; };
@@ -78,6 +79,9 @@
 		1BC9493E1F545DDE53DCD245 /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
 		3145C668292822C7009E5F28 /* PlanetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetModel.swift; sourceTree = "<group>"; };
 		31583DB6292EB7E1008D7B44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3162176B2970C91B00795BEB /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		3162176F2970C98000795BEB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		316217712970C98300795BEB /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		31DAFA1E29392929009D850A /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
 		31ED18972926B32A000E7736 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		47D75B369558B49ABA02E2D7 /* Pods-StorageService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.release.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.release.xcconfig"; sourceTree = "<group>"; };
@@ -243,6 +247,7 @@
 				7C8FADCB2751704E009FB054 /* LaunchScreen.storyboard */,
 				31583DB6292EB7E1008D7B44 /* GoogleService-Info.plist */,
 				7C8FADCE2751704E009FB054 /* Info.plist */,
+				316217702970C98000795BEB /* Localizable.strings */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -362,6 +367,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 7C8FADB42751704C009FB054;
 			packageReferences = (
@@ -391,6 +397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C8FADCD2751704E009FB054 /* LaunchScreen.storyboard in Resources */,
+				3162176E2970C98000795BEB /* Localizable.strings in Resources */,
 				7C8FADCA2751704E009FB054 /* Assets.xcassets in Resources */,
 				31583DB7292EB7E1008D7B44 /* GoogleService-Info.plist in Resources */,
 			);
@@ -517,10 +524,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		316217702970C98000795BEB /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3162176F2970C98000795BEB /* en */,
+				316217712970C98300795BEB /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		7C8FADCB2751704E009FB054 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7C8FADCC2751704E009FB054 /* Base */,
+				3162176B2970C91B00795BEB /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -596,6 +613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -657,6 +675,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

@@ -43,7 +43,7 @@ class PostViewController: UIViewController {
         
         self.title = postTitle
         
-        let infoBarItem: UIBarButtonItem = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoTapped))
+        let infoBarItem: UIBarButtonItem = UIBarButtonItem(title: "info.title", style: .plain, target: self, action: #selector(infoTapped))
         navigationItem.rightBarButtonItem = infoBarItem
         
         view.addSubviews(postImage, likesCountLabel, viewsCountLabel)
@@ -100,8 +100,8 @@ class PostViewController: UIViewController {
         viewsCount += randomViews
 
         DispatchQueue.main.async {
-            self.likesCountLabel.text = "Likes: \(self.likesCount)"
-            self.viewsCountLabel.text = "Views: \(self.viewsCount)"
+            self.likesCountLabel.text = NSLocalizedString("likes", comment: "") + " \(self.likesCount)"
+            self.viewsCountLabel.text = NSLocalizedString("views", comment: "") + " \(self.viewsCount)"
         }
     }
     
