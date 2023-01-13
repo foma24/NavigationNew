@@ -11,7 +11,7 @@ final class CustomTextField: UITextField {
         self.addTarget(self, action: #selector(inputText), for: .editingChanged)
         self.toAutoLayout()
         self.backgroundColor = .white
-        self.placeholder = "Enter password..."
+        self.placeholder = NSLocalizedString("password.enter", comment: "")
         self.text = ""
     }
     

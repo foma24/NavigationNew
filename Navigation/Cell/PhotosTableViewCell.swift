@@ -6,7 +6,7 @@ class PhotoTableViewCell: UITableViewCell {
 
     private lazy var photosLabel: UILabel = {
         let photosLabel = UILabel()
-        photosLabel.text = "My Photos"
+        photosLabel.text = NSLocalizedString("photos.title", comment: "")
         photosLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         photosLabel.textColor = .black
         photosLabel.toAutoLayout()

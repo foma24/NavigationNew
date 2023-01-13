@@ -1,4 +1,6 @@
 import UIKit
+import FirebaseAuth
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,25 +11,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         
+        //MARK: Firebase
+        FirebaseApp.configure()
+        
+        //MARK: Network request
+        let appConfiguration: AppConfiguration = AppConfiguration.people
+        NetworkService.request(for: appConfiguration)
+        
         //MARK: feedVC
-        //
         let feedBarItem = UITabBarItem()
-        feedBarItem.title = "Feed"
+        feedBarItem.title = NSLocalizedString("feed.title", comment: "")
         feedBarItem.image = UIImage(systemName: "doc.plaintext")
         feedBarItem.selectedImage = UIImage(systemName: "doc.plaintext.fill")
         let feedVC = FeedViewController()
         feedVC.view.backgroundColor = .white
-        feedVC.title = "Feed"
+        feedVC.title = NSLocalizedString("feed.title", comment: "")
         let feedNavigationController = UINavigationController(rootViewController: feedVC)
         feedVC.tabBarItem = feedBarItem
         
         //MARK: profileVC
         let profileBarItem = UITabBarItem()
-        profileBarItem.title = "Profile"
+        profileBarItem.title = NSLocalizedString("profile.title", comment: "")
         profileBarItem.image = UIImage(systemName: "folder")
-        profileBarItem.selectedImage = UIImage(systemName: "folder.fill")
-//        let profileVC = ProfileViewController()
-//        profileVC.title = "Profile"
+        profileBarItem.selectedImage = UIImage(systemName: "profile.title")
+        //        let profileVC = ProfileViewController()
+        //        profileVC.title = "Profile"
         
         //MARK: loginVC
         let loginVC = LogInViewController()
@@ -49,6 +57,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
     }
 }
 
