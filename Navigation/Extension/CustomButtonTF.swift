@@ -10,7 +10,7 @@ final class CustomButtonTF: UIButton {
         self.addTarget(self, action: #selector(checkPass), for: .touchUpInside)
         self.toAutoLayout()
         self.backgroundColor = .orange
-        self.setTitle("Check Password", for: .normal)
+        self.setTitle(NSLocalizedString("password.check", comment: ""), for: .normal)
         self.setTitleColor(.white, for: .normal)
     }
     

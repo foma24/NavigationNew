@@ -43,7 +43,7 @@ class PostViewController: UIViewController {
         
         self.title = postTitle
         
-        let infoBarItem: UIBarButtonItem = UIBarButtonItem(title: "info.title", style: .plain, target: self, action: #selector(infoTapped))
+        let infoBarItem: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("info.title", comment: ""), style: .plain, target: self, action: #selector(infoTapped))
         navigationItem.rightBarButtonItem = infoBarItem
         
         view.addSubviews(postImage, likesCountLabel, viewsCountLabel)

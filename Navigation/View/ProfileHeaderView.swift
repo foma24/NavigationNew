@@ -59,7 +59,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         setStatusButton.toAutoLayout()
         setStatusButton.backgroundColor = .blue
         setStatusButton.layer.cornerRadius = 12
-        setStatusButton.setTitle("Set status", for: .normal)
+        setStatusButton.setTitle(NSLocalizedString("set.status", comment: ""), for: .normal)
         setStatusButton.setTitleColor(.lightGray, for: .highlighted)
         setStatusButton.addTarget(self, action: #selector(setStatus), for: .touchUpInside)
         
@@ -69,7 +69,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private(set) lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
         statusLabel.toAutoLayout()
-        statusLabel.text = "Status appears here..."
+        statusLabel.text = NSLocalizedString("status.placeholder", comment: "")
         statusLabel.numberOfLines = 2
         statusLabel.textColor = .gray
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -88,7 +88,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         statusTextField.textColor = .black
         statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: statusTextField.frame.height))
         statusTextField.leftViewMode = .always
-        statusTextField.placeholder = "Set status"
+        statusTextField.placeholder = NSLocalizedString("set.status" , comment: "")
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         return statusTextField
     }()

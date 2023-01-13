@@ -8,3 +8,14 @@
 "likes" = "Likes:";
 "views" = "Views:";
 "alert" = "Alert";
+"login.placeholder" = "Enter email or phone...";
+"pass.placeholder" = "Password here...";
+"signup" = "SignUp";
+"login" = "Login";
+"error" = "Error";
+"set.status" = "Set status";
+"status.placeholder" = "Status appears here...";
+"photos.title" = "My Photos";
+"password.check" = "Check Password";
+"password.enter" = "Enter password...";
+"photo.gallery" = "Photo Gallery";

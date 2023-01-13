@@ -48,7 +48,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         let loginTF = UITextField()
         loginTF.toAutoLayout()
         loginTF.leftViewMode = .always
-        loginTF.placeholder = "Enter email or phone..."
+        loginTF.placeholder = NSLocalizedString("login.placeholder", comment: "")
         loginTF.layer.borderColor = UIColor.lightGray.cgColor
         loginTF.layer.borderWidth = 0.25
         loginTF.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: loginTF.frame.height))
@@ -65,7 +65,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         let passwordTF = UITextField()
         passwordTF.toAutoLayout()
         passwordTF.leftViewMode = .always
-        passwordTF.placeholder = "Password here..."
+        passwordTF.placeholder = NSLocalizedString("pass.placeholder", comment: "")
         passwordTF.layer.borderColor = UIColor.lightGray.cgColor
         passwordTF.layer.borderWidth = 0.25
         passwordTF.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: passwordTF.frame.height))
@@ -88,7 +88,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             signupButton.setBackgroundImage(image.image(alpha: 0.8), for: .disabled)
         }
         
-        signupButton.setTitle("SignUp", for: .normal)
+        signupButton.setTitle(NSLocalizedString("signup", comment: ""), for: .normal)
         signupButton.setTitleColor(.white, for: .normal)
         signupButton.addTarget(self, action: #selector(signupButtonPressed), for: .touchUpInside)
         signupButton.layer.cornerRadius = 10
@@ -107,7 +107,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             loginButton.setBackgroundImage(image.image(alpha: 0.8), for: .disabled)
         }
         
-        loginButton.setTitle("Login", for: .normal)
+        loginButton.setTitle(NSLocalizedString("login", comment: ""), for: .normal)
         loginButton.setTitleColor(.white, for: .normal)
         loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
         loginButton.layer.cornerRadius = 10
@@ -235,7 +235,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     @objc private func signupButtonPressed() {
         
         if loginTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            let alertVC = UIAlertController(title: "Error", message: "Some field is missed", preferredStyle: .alert)
+            let alertVC = UIAlertController(title: NSLocalizedString("error", comment: ""), message: "Some field is missed", preferredStyle: .alert)
             let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
             alertVC.addAction(action)
             self.present(alertVC, animated: true, completion: nil)
@@ -246,7 +246,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                 let profileVC = ProfileViewController()
                 self?.navigationController?.pushViewController(profileVC, animated: false)
             } else {
-                let alertVC = UIAlertController(title: "Error", message: "SignUp error", preferredStyle: .alert)
+                let alertVC = UIAlertController(title: NSLocalizedString("error", comment: ""), message: "SignUp error", preferredStyle: .alert)
                 let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
                 alertVC.addAction(action)
                 self?.present(alertVC, animated: true, completion: nil)
@@ -257,14 +257,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Login button pressed
     @objc private func loginButtonPressed() {
         guard loginTextField.text?.isEmpty == false else {
-            let alertVC = UIAlertController(title: "Error", message: "Login missed", preferredStyle: .alert)
+            let alertVC = UIAlertController(title: NSLocalizedString("error", comment: ""), message: "Login missed", preferredStyle: .alert)
             let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
             alertVC.addAction(action)
             self.present(alertVC, animated: true, completion: nil)
             return }
         
         guard passwordTextField.text?.isEmpty == false else {
-            let alertVC = UIAlertController(title: "Error", message: "Password missed", preferredStyle: .alert)
+            let alertVC = UIAlertController(title: NSLocalizedString("error", comment: ""), message: "Password missed", preferredStyle: .alert)
             let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
             alertVC.addAction(action)
             self.present(alertVC, animated: true, completion: nil)
@@ -272,7 +272,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         
         if loginTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
-            let alertVC = UIAlertController(title: "Error", message: "Some field is missing", preferredStyle: .alert)
+            let alertVC = UIAlertController(title: NSLocalizedString("error", comment: ""), message: "Some field is missing", preferredStyle: .alert)
             let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
             alertVC.addAction(action)
             self.present(alertVC, animated: true, completion: nil)
@@ -285,7 +285,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                 
                 RealmModel.saveRealmUser((self?.loginTextField.text!)!, (self?.passwordTextField.text!)!)
             } else {
-                let alertVC = UIAlertController(title: "Error", message: "Login error", preferredStyle: .alert)
+                let alertVC = UIAlertController(title: NSLocalizedString("error", comment: ""), message: "Login error", preferredStyle: .alert)
                 let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
                 alertVC.addAction(action)
                 self?.present(alertVC, animated: true, completion: nil)
