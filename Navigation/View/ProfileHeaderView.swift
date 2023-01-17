@@ -10,7 +10,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var plagView: UIView = {
         let plagView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         plagView.toAutoLayout()
-        plagView.backgroundColor = .white
+        plagView.backgroundColor = Palette.whiteAndBlack
         plagView.alpha = 0
         
         return plagView
@@ -20,7 +20,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         let closeButton = UIButton()
         closeButton.toAutoLayout()
         closeButton.setTitle("X", for: .normal)
-        closeButton.setTitleColor(.black, for: .highlighted)
+        closeButton.setTitleColor(Palette.blackAndWhite, for: .highlighted)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.closeTapped))
         closeButton.addGestureRecognizer(gesture)
         closeButton.isUserInteractionEnabled = true
@@ -48,7 +48,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         let fullNameLabel = UILabel()
         fullNameLabel.toAutoLayout()
         fullNameLabel.text = "Profile Name"
-        fullNameLabel.textColor = .black
+        fullNameLabel.textColor = Palette.blackAndWhite
         fullNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         
         return fullNameLabel
@@ -59,8 +59,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         setStatusButton.toAutoLayout()
         setStatusButton.backgroundColor = .blue
         setStatusButton.layer.cornerRadius = 12
-        setStatusButton.setTitle("Set status", for: .normal)
-        setStatusButton.setTitleColor(.lightGray, for: .highlighted)
+        setStatusButton.setTitle(NSLocalizedString("set.status", comment: ""), for: .normal)
+        setStatusButton.setTitleColor(Palette.grayAndLightGray, for: .highlighted)
         setStatusButton.addTarget(self, action: #selector(setStatus), for: .touchUpInside)
         
         return setStatusButton
@@ -69,9 +69,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private(set) lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
         statusLabel.toAutoLayout()
-        statusLabel.text = "Status appears here..."
+        statusLabel.text = NSLocalizedString("status.placeholder", comment: "")
         statusLabel.numberOfLines = 2
-        statusLabel.textColor = .gray
+        statusLabel.textColor = Palette.grayAndLightGray
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         
         return statusLabel
@@ -88,7 +88,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         statusTextField.textColor = .black
         statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: statusTextField.frame.height))
         statusTextField.leftViewMode = .always
-        statusTextField.placeholder = "Set status"
+        statusTextField.placeholder = NSLocalizedString("set.status" , comment: "")
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         return statusTextField
     }()

@@ -5,20 +5,20 @@ class FeedViewController: UIViewController {
     var passwordText: String = ""
     
     lazy private var firstButton: CustomButton = {
-        var firstButton = CustomButton(title: "First Button", titleColor: .white) {
+        var firstButton = CustomButton(title: NSLocalizedString("first.button", comment: ""), titleColor: Palette.blackAndWhite) {
             let postVC = PostViewController()
             self.navigationController?.pushViewController(postVC, animated: true)
-            postVC.postTitle = "First Button"
+            postVC.postTitle = NSLocalizedString("first.button", comment: "")
         }
         
         return firstButton
     }()
     
     lazy private var secondButton: CustomButton = {
-        var secondButton = CustomButton(title: "Second Button", titleColor: .white) {
+        var secondButton = CustomButton(title: NSLocalizedString("second.button", comment: ""), titleColor:  Palette.blackAndWhite) {
             let postVC = PostViewController()
             self.navigationController?.pushViewController(postVC, animated: true)
-            postVC.postTitle = "Second Button"
+            postVC.postTitle = NSLocalizedString("second.button", comment: "")
         }
         
         return secondButton
@@ -56,12 +56,12 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Feed"
+        self.title = NSLocalizedString("feed.title", comment: "")
         self.view.addSubview(stackView)
         stackView.addArrangedSubviews(firstButton, secondButton, feedTextfield, checkGuessButton, statusLabel)
         stackView.spacing = 10
         stackView.distribution = .fillEqually
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.feedBackground
         setupConstraints()
         
         let notify = NotificationCenter.default
@@ -71,13 +71,13 @@ class FeedViewController: UIViewController {
     
     //MARK: - passwordCheck
     @objc func passwordCorrect() {
-        statusLabel.text = "Password Correct"
+        statusLabel.text = NSLocalizedString("password.correct", comment: "")
         statusLabel.textColor = .systemGreen
         statusLabel.isHidden = false
     }
     
     @objc func passwordWrong() {
-        statusLabel.text = "Password Wrong"
+        statusLabel.text = NSLocalizedString("password.wrong", comment: "")
         statusLabel.textColor = .systemRed
         statusLabel.isHidden = false
     }

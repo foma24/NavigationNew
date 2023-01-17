@@ -99,8 +99,8 @@ class PostTableViewCell: UITableViewCell {
         }
         
         self.postDescription.text = description
-        self.postLikes.text = "Likes: \(likes)"
-        self.postViews.text = "Views: \(views)"
+        self.postLikes.text = NSLocalizedString("likes", comment: "") + " \(likes)"
+        self.postViews.text = NSLocalizedString("views", comment: "") + " \(views)"
     }
     
     //MARK: - Setup constraints

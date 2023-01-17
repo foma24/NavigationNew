@@ -14,7 +14,7 @@ final class CustomButton: UIButton {
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
         self.toAutoLayout()
-        self.backgroundColor = UIColor.blue
+        self.backgroundColor = UIColor.lightGray
     }
     
     @objc func buttonTapped(){
