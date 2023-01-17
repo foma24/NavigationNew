@@ -10,7 +10,7 @@ class PhotoViewController: UIViewController {
         photoCollectionLayout.scrollDirection = .vertical
         let photosCollection = UICollectionView(frame: .zero, collectionViewLayout: photoCollectionLayout)
         photosCollection.toAutoLayout()
-        photosCollection.backgroundColor = .white
+        photosCollection.backgroundColor = Palette.whiteAndBlack
         photosCollection.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifire)
         
         return photosCollection
@@ -27,7 +27,7 @@ class PhotoViewController: UIViewController {
         setupConstraints()
         
         navigationController?.navigationBar.isHidden = false
-        self.title = "Photo Gallery"
+        self.title = NSLocalizedString("photo.gallery" , comment: "")
         
         facade.subscribe(self)
         //facade.addImagesWithTimer(time: 0.3, repeat: photosArray.count)

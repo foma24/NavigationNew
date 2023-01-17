@@ -14,7 +14,7 @@ class PostViewController: UIViewController {
         let label = UILabel()
         label.toAutoLayout()
         label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
+        label.textColor = Palette.blackAndWhite
         label.text = "Likes: 0"
 
         return label
@@ -24,7 +24,7 @@ class PostViewController: UIViewController {
         let label = UILabel()
         label.toAutoLayout()
         label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
+        label.textColor = Palette.blackAndWhite
         label.text = "Views: 0"
 
         return label
@@ -39,7 +39,7 @@ class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.postBackground
         
         self.title = postTitle
         

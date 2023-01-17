@@ -5,7 +5,7 @@ class FeedViewController: UIViewController {
     var passwordText: String = ""
     
     lazy private var firstButton: CustomButton = {
-        var firstButton = CustomButton(title: NSLocalizedString("first.button", comment: ""), titleColor: .white) {
+        var firstButton = CustomButton(title: NSLocalizedString("first.button", comment: ""), titleColor: Palette.blackAndWhite) {
             let postVC = PostViewController()
             self.navigationController?.pushViewController(postVC, animated: true)
             postVC.postTitle = NSLocalizedString("first.button", comment: "")
@@ -15,7 +15,7 @@ class FeedViewController: UIViewController {
     }()
     
     lazy private var secondButton: CustomButton = {
-        var secondButton = CustomButton(title: NSLocalizedString("second.button", comment: ""), titleColor: .white) {
+        var secondButton = CustomButton(title: NSLocalizedString("second.button", comment: ""), titleColor:  Palette.blackAndWhite) {
             let postVC = PostViewController()
             self.navigationController?.pushViewController(postVC, animated: true)
             postVC.postTitle = NSLocalizedString("second.button", comment: "")
@@ -61,7 +61,7 @@ class FeedViewController: UIViewController {
         stackView.addArrangedSubviews(firstButton, secondButton, feedTextfield, checkGuessButton, statusLabel)
         stackView.spacing = 10
         stackView.distribution = .fillEqually
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.feedBackground
         setupConstraints()
         
         let notify = NotificationCenter.default

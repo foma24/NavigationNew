@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         feedBarItem.image = UIImage(systemName: "doc.plaintext")
         feedBarItem.selectedImage = UIImage(systemName: "doc.plaintext.fill")
         let feedVC = FeedViewController()
-        feedVC.view.backgroundColor = .white
+        feedVC.view.backgroundColor = Palette.feedBackground
         feedVC.title = NSLocalizedString("feed.title", comment: "")
         let feedNavigationController = UINavigationController(rootViewController: feedVC)
         feedVC.tabBarItem = feedBarItem
@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //MARK: loginVC
         let loginVC = LogInViewController()
-        loginVC.view.backgroundColor = .white
+        loginVC.view.backgroundColor = Palette.loginBackground
         let loginNavigationController = UINavigationController(rootViewController: loginVC)
         loginVC.tabBarItem = profileBarItem
         
@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //MARK: Tab Bar
         let tabBarController = UITabBarController()
-        tabBarController.tabBar.backgroundColor = .white
+        tabBarController.tabBar.backgroundColor = Palette.whiteAndBlack
         tabBarController.viewControllers = [feedNavigationController, loginNavigationController]
         tabBarController.selectedIndex = 0
         

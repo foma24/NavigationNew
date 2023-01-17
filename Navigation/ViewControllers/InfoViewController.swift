@@ -11,7 +11,7 @@ class InfoViewController: UIViewController {
         alertButton.clipsToBounds = true
         alertButton.backgroundColor = .red
         alertButton.setTitle(NSLocalizedString("alert", comment: "") , for: .normal)
-        alertButton.setTitleColor(.white, for: .normal)
+        alertButton.setTitleColor(Palette.blackAndWhite, for: .normal)
         alertButton.addTarget(self, action: #selector(alertButtonTapped), for: .touchUpInside)
         
         return alertButton
@@ -54,7 +54,7 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .lightGray
+        view.backgroundColor = Palette.infoBackground
         
         setupSubviews()
         setupSubviewsLayout()

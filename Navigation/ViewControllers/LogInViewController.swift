@@ -38,7 +38,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         loginFormStackView.layer.borderWidth = 0.5
         loginFormStackView.layer.cornerRadius = 10
         loginFormStackView.distribution = .fillProportionally
-        loginFormStackView.backgroundColor = .systemGray6
+        loginFormStackView.backgroundColor = Palette.profileBackground
         loginFormStackView.clipsToBounds = true
         
         return loginFormStackView
@@ -53,7 +53,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         loginTF.layer.borderWidth = 0.25
         loginTF.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: loginTF.frame.height))
         loginTF.keyboardType = .emailAddress
-        loginTF.textColor = .black
+        loginTF.textColor = Palette.blackAndWhite
         loginTF.font = UIFont.systemFont(ofSize: 16)
         loginTF.autocapitalizationType = .none
         loginTF.returnKeyType = .done
@@ -70,7 +70,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         passwordTF.layer.borderWidth = 0.25
         passwordTF.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: passwordTF.frame.height))
         passwordTF.isSecureTextEntry = true
-        passwordTF.textColor = .black
+        passwordTF.textColor = Palette.blackAndWhite
         passwordTF.font = UIFont.systemFont(ofSize: 16)
         passwordTF.autocapitalizationType = .none
         passwordTF.returnKeyType = .done
@@ -160,7 +160,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Setup View
     private func setupViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = Palette.loginBackground
         view.addSubview(loginScrollView)
         loginScrollView.addSubview(contentView)
         contentView.addSubviews(VKIcon, stackView, loginButton, signupButton)
